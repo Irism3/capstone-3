@@ -1,8 +1,8 @@
 package org.yearup.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import org.yearup.data.CategoryDao;
 import org.yearup.data.ProductDao;
 import org.yearup.models.Category;
@@ -14,6 +14,7 @@ import java.util.List;
 // add the annotation to make this controller the endpoint for the following url
     // http://localhost:8080/categories
 // add annotation to allow cross site origin requests
+@RestController
 public class CategoriesController
 {
     private CategoryDao categoryDao;
@@ -21,19 +22,27 @@ public class CategoriesController
 
 
     // create an Autowired controller to inject the categoryDao and ProductDao
-
+    @Autowired
+    public CategoriesController(CategoryDao categoryDao) {
+        this.categoryDao = categoryDao;
+    }
+    @Autowired
+    public CategoriesController(ProductDao productDao) {
+        this.productDao = productDao;
+    }
     // add the appropriate annotation for a get action
-    public List<Category> getAll()
-    {
+    @RequestMapping(path = "/Categories",method = RequestMethod.GET)
+    public List<Category> getAll() {
         // find and return all categories
-        return null;
+        return this.categoryDao.getAllCategories();
     }
 
     // add the appropriate annotation for a get action
+    @RequestMapping(path = "/categories/{id}", method = RequestMethod.GET)
     public Category getById(@PathVariable int id)
     {
         // get the category by id
-        return null;
+        return this.categoryDao.getById(id);
     }
 
     // the url to return all products in category 1 would look like this
@@ -42,15 +51,17 @@ public class CategoriesController
     public List<Product> getProductsById(@PathVariable int categoryId)
     {
         // get a list of product by categoryId
-        return null;
+        return ProductDao.getP();
     }
 
     // add annotation to call this method for a POST action
     // add annotation to ensure that only an ADMIN can call this function
+    @RequestMapping(path = "/Category", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public Category addCategory(@RequestBody Category category)
     {
         // insert the category
-        return null;
+        return this.categoryDao.addCategory(category);
     }
 
     // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
