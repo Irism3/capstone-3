@@ -38,7 +38,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
             while(resultSet.next()) {
                 Category category = mapRow(resultSet);
                 categories.add(category);
-//hi
+//hii
             }
             return getAllCategories();
 
