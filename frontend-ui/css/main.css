@@ -1,3 +1,6 @@
+body{
+ background-color: #DDDCCD;
+ }
 header
 {
     display: flex;
@@ -8,7 +11,7 @@ header
 
     padding: 5px 15px;
     border-bottom: solid 1px #555;
-    box-shadow: 5px 2px #eee;
+    box-shadow: 5px 2px #4DA9E3;
 }
 
 header img
