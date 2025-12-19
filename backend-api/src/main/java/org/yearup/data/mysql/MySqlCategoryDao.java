@@ -67,7 +67,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     @Override
     public Category create(Category category) {
         String sql = """
-                INSERT TO categories (name, description)
+                INSERT INTO categories (name, description)
                 VALUES (?,?)
                 """;
 
@@ -76,7 +76,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
 
             preparedStatement.setString(1, category.getName());
             preparedStatement.setString(2,category.getDescription());
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
 
             try (ResultSet keys = preparedStatement.getGeneratedKeys()) {
                 if (keys.next()) {
@@ -104,7 +104,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
             preparedStatement.setString(1, category.getName());
             preparedStatement.setString(2, category.getDescription());
             preparedStatement.setInt(3,categoryId);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -120,7 +120,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1,categoryId);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException("Error deleting category",e);
